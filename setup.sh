@@ -1,10 +1,18 @@
+# restart docker
+
+sudo service docker restart
+
+# set minikube config
+
+minikube config set vm-driver docker
+
 # initialization of minikube
 
-#minikube delete
+minikube delete
 
 # switch on minikube
 
-minikube start --vm-driver=docker
+minikube start
 
 # modification of kube-proxy
 
@@ -36,7 +44,10 @@ kubectl create secret generic -n metallb-system memberlist --from-literal=secret
 
 kubectl config set-context --current --namespace=metallb-system
 
-
 # apply metallb configMap
 
-kubectl apply -f metallb-configMap
+kubectl apply -f metallb-configMap.yaml
+
+# dashboard's deployment
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/aio/deploy/recommended.yaml
