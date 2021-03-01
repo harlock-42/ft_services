@@ -1,3 +1,6 @@
+
+service nginx stop
+
 # clean the cluster
 
 minikube delete
