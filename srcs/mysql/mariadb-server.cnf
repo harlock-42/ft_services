@@ -2,5 +2,5 @@
 user = root
 port = 3306
 datadir = /var/lib/mysql
-blind-address = 0.0.0.0
-skip-networking
+bind-address = 0.0.0.0
+skip-networking = false
