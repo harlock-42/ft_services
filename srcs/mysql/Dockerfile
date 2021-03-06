@@ -3,8 +3,6 @@ FROM alpine:3.13
 
 # instaling packages
 RUN apk update \
-&& apk add --no-cache vim \
-&& apk add --no-cache openrc
 
 RUN apk add --no-cache mariadb mariadb-client
 
