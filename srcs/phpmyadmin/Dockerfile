@@ -32,3 +32,5 @@ COPY config.inc.php /var/www/localhost/phpmyadmin/
 COPY init.sh tmp/init.sh
 
 ENTRYPOINT sh ./tmp/init.sh
+
+EXPOSE 5000

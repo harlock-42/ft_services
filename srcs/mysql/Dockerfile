@@ -2,7 +2,7 @@ FROM alpine:3.13
 
 
 # instaling packages
-RUN apk update \
+RUN apk update
 
 RUN apk add --no-cache mariadb mariadb-client
 
@@ -21,3 +21,5 @@ RUN chmod 711 /tmp/init.sh
 
 # start mariadb to create /etc/init.d/mariadb and other executable in this path
 ENTRYPOINT ./tmp/init.sh
+
+EXPOSE 3306

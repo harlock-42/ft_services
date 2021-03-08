@@ -25,4 +25,4 @@ COPY index.html /data/www/index.html
 
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# ENTRYPOINT nginx
+ENTRYPOINT nginx -g "daemon off;"
