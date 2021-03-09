@@ -9,4 +9,4 @@ data:
     - name: custom-ip-pool
       protocol: layer2
       addresses:
-      - 192.168.99.100
+      - 192.168.49.2-192.168.49.2

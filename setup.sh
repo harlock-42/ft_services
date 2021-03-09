@@ -5,16 +5,6 @@ install_metallb()
 	kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
 }
 
-# Start host machin
-
-sudo service docker start
-
-minikube delete
-
-sudo service nginx stop
-
-sudo service mariadb stop
-
 # clean the cluster
 
 minikube delete
@@ -23,16 +13,20 @@ minikube delete
 
 minikube start --vm-driver=docker
 
-eval $(minikube docker-env)
-
 install_metallb
+
+eval $(minikube docker-env)
 
 # Building images
 
+docker build -t wp-img ./srcs/wordpress/.
 docker build -t mysql-img ./srcs/mysql/.
 docker build -t php-img ./srcs/phpmyadmin/.
-docker build -t wp-img ./srcs/wordpress/.
 docker build -t nginx-img ./srcs/nginx/.
+
+# apply metallb
+
+kubectl apply -f ./srcs/metal-lb.yaml
 
 # sart deployments
 

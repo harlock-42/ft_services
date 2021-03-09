@@ -4,10 +4,10 @@ FROM alpine:3.13
 # instaling packages
 RUN apk update
 
-RUN apk add --no-cache mariadb mariadb-client
+RUN apk add mariadb mariadb-client
 
 # onpenrc installation and fixing
-RUN apk add --no-cache openrc
+RUN apk add openrc
 
 RUN mkdir -p /run/openrc && \
 touch /run/openrc/softlevel

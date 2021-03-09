@@ -22,10 +22,7 @@ RUN mkdir -p /run/nginx
 
 WORKDIR /var/www/localhost/ 
 
-RUN wget -q http://files.directadmin.com/services/all/phpMyAdmin/phpMyAdmin-5.0.2-all-languages.tar.gz && \
-    tar -zxvf phpMyAdmin-5.0.2-all-languages.tar.gz && rm phpMyAdmin-5.0.2-all-languages.tar.gz  && \
-    mv phpMyAdmin-5.0.2-all-languages phpmyadmin && \
-    chmod -R 777 /var/www/localhost/phpmyadmin/
+COPY phpmyadmin /var/www/localhost/phpmyadmin
 
 COPY config.inc.php /var/www/localhost/phpmyadmin/
 
