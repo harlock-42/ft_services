@@ -29,10 +29,10 @@ install_metallb
 
 # Building images
 
-docker build -t nginx-img ./srcs/nginx/.
 docker build -t mysql-img ./srcs/mysql/.
 docker build -t php-img ./srcs/phpmyadmin/.
 docker build -t wp-img ./srcs/wordpress/.
+docker build -t nginx-img ./srcs/nginx/.
 
 # sart deployments
 

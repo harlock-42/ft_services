@@ -25,6 +25,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql-service
+  annotations:
+    metallb.universe.tf/allow-shared-ip : shared
 spec:
   selector:
     app: mysql-depl
@@ -33,3 +35,4 @@ spec:
       protocol: TCP
       port: 3306
       targetPort: 3306
+  type: LoadBalancer
