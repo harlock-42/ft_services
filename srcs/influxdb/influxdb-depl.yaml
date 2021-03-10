@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: influxdb-deployment
+spec:
+  selector:
+    matchLabels:
+      app: influxdb-depl
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: influxdb-depl
+    spec:
+      containers:
+        - image: influxdb-img
+          name: influxdb
+          ports:
+            - containerPort: 8086
+          imagePullPolicy: Never
+          volumeMounts:
+            - mountPath: /var/lib/influxdb
+              name: influxdb-data
+      volumes:
+        - name: influxdb-data
+          persistentVolumeClaim:
+            claimName: influxdb-data
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: influxdb-service
+  annotations:
+    metallb.universe.tf/allow-shared-ip : shared
+spec:
+  selector:
+    app: influxdb-depl
+  ports:
+    - name: influxdb
+      protocol: TCP
+      port: 8086
+      targetPort: 8086
+  type: LoadBalancer

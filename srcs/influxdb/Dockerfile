@@ -6,3 +6,5 @@ apk add vim
 RUN apk add influxdb
 
 COPY influxdb.conf /etc/influxdb.conf
+
+ENTRYPOINT sleep infinity
