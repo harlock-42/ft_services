@@ -5,6 +5,15 @@ apk add vim
 
 RUN apk add influxdb
 
+RUN apk add openrc
+
+RUN mkdir -p /run/openrc && \
+touch /run/openrc/softlevel
+
+RUN openrc >/dev/null 2>&1
+
 COPY influxdb.conf /etc/influxdb.conf
 
-ENTRYPOINT sleep infinity
+COPY init.sh /tmp/init.sh
+
+ENTRYPOINT /tmp/init.sh
