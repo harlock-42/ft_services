@@ -37,6 +37,7 @@ kubectl apply -f ./srcs/metal-lb.yaml
 # apply volume
 
 kubectl apply -f ./srcs/influxdb/influxdb-volume.yaml
+kubectl apply -f ./srcs/mysql/mysql-volume.yaml
 
 # start deployments
 

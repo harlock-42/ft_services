@@ -18,8 +18,15 @@ spec:
         - name: mysql
           image: mysql-img
           ports:
-          - containerPort: 3306
+            - containerPort: 3306
           imagePullPolicy: Never
+          volumeMounts:
+            - mountPath: /var/lib/mysql
+              name: mysql-data
+      volumes:
+        - name: mysql-data
+          persistentVolumeClaim:
+            claimName: mysql-data
 ---
 apiVersion: v1
 kind: Service
