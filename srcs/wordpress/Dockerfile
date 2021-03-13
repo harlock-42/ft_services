@@ -8,6 +8,20 @@ RUN apk add php7-fpm php7-mcrypt php7-soap php7-openssl php7-gmp php7-pdo_odbc p
 
 RUN mkdir -p /run/nginx
 
+# SSL installation
+RUN apk add openssl
+RUN mkdir -p /etc/ssl/private && \
+mkdir -p /etc/ssl/certs
+RUN chmod 700 /etc/ssl/private && \
+chmod 700 /etc/ssl/certs
+RUN openssl req -x509 \
+-nodes \
+-days 365 \
+-newkey rsa:2048 \
+-keyout /etc/ssl/private/nginx-selfsigned.key \
+-out	/etc/ssl/certs/nginx-selfsigned.crt \
+-subj "/C=FR/ST=Paris/L=Paris/O=42 School/OU=harlock/CN=localhost"
+
 # onpenrc installation and fixing
 RUN apk add openrc
 
@@ -19,6 +33,13 @@ RUN openrc >/dev/null 2>&1
 COPY nginx.conf /etc/nginx/nginx.conf
 
 COPY wordpress /var/www/localhost/wordpress
+
+# Telegraf configuration
+RUN apk add telegraf
+RUN mkdir -p /var/log/telegraf
+RUN touch /var/log/telegraf/telegraf.log
+COPY telegraf.conf /etc/telegraf/telegraf.conf
+RUN export TELEGRAF_CONFIG_PATH="/etc/telegraf/telegraf.conf"
 
 COPY init.sh /tmp/init.sh
 

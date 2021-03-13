@@ -36,6 +36,7 @@ echo "GRANT ALL PRIVILEGES ON *.* TO 'harlock'@'localhost' WITH GRANT OPTION ;" 
 
 echo "FLUSH PRIVILEGES ;" | mysql -u root
 
+telegraf
 
 # generate an infinity loop to keep the container running
 sleep infinity
