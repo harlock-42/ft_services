@@ -4,8 +4,13 @@ RUN apk update
 
 RUN apk add vim
 
-# Installing and setup nginx
+# Installing openrc
 RUN apk add openrc
+RUN mkdir -p /run/openrc && \
+touch /run/openrc/softlevel
+RUN openrc >/dev/null 2>&1
+
+# Installing and setup nginx
 RUN apk add nginx
 RUN mkdir -p /run/nginx
 COPY default.conf /etc/nginx/http.d/default.conf
@@ -24,11 +29,6 @@ RUN openssl req -x509 \
 -keyout /etc/ssl/private/nginx-selfsigned.key \
 -out	/etc/ssl/certs/nginx-selfsigned.crt \
 -subj "/C=FR/ST=Paris/L=Paris/O=42 School/OU=harlock/CN=localhost"
-
-# Installing openrc
-RUN mkdir -p /run/openrc && \
-touch /run/openrc/softlevel
-RUN openrc >/dev/null 2>&1
 
 COPY init.sh /tmp/init.sh
 

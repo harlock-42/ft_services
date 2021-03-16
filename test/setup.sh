@@ -25,14 +25,14 @@ eval $(minikube docker-env)
 
 #docker build -t wp-img ./srcs/wordpress/.
 #docker build -t mysql-img ./srcs/mysql/.
-#docker build -t php-img ./srcs/phpmyadmin/.
+docker build -t php-img ./srcs/phpmyadmin/.
 docker build -t nginx-img ./srcs/nginx/.
 #docker build -t influxdb-img ./srcs/influxdb/.
 #docker build -t grafana-img ./srcs/grafana/.
 
 # apply metallb
 
-kubectl apply -f ./srcs/metal-lb.yaml
+kubectl apply -f ./srcs/metallb.yaml
 
 # apply volume
 
@@ -45,6 +45,6 @@ kubectl apply -f ./srcs/nginx/nginx-depl.yaml
 #kubectl apply -f ./srcs/influxdb/influxdb-depl.yaml
 #kubectl apply -f ./srcs/grafana/grafana-depl.yaml
 #kubectl apply -f ./srcs/mysql/mysql-depl.yaml
-#kubectl apply -f ./srcs/phpmyadmin/php-depl.yaml
+kubectl apply -f ./srcs/phpmyadmin/php-depl.yaml
 #kubectl apply -f ./srcs/wordpress/wp-depl.yaml
 
