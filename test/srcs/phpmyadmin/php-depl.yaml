@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-deployment
+  labels:
+    app: php-depl
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: php-depl
+  template:
+    metadata:
+      labels:
+        app: php-depl
+    spec:
+      containers:
+      - name: php
+        image: php-img
+        ports:
+        - containerPort: 5000
+        imagePullPolicy: Never
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: php-service
+  annotations:
+    metallb.universe.tf/allow-shared-ip : shared
+spec:
+  selector:
+    app: php-depl
+  ports:
+    - name: https
+      protocol: TCP
+      port: 5000
+      targetPort: 5000
+  type: LoadBalancer
