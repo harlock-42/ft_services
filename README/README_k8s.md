@@ -72,3 +72,8 @@ kubectl cp POD_NAME:/path/to/remote/file /path/to/local/file
 ```
 kubectl cp /path/to/local/file  POD_NAME:/path/to/remote/file
 ```
+# SERVICE
+## Get external ip of a service
+```
+minikube service --url SERVICE_NAME
+```

@@ -5,7 +5,7 @@ metadata:
   labels:
     app: php-depl
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: php-depl
@@ -15,11 +15,11 @@ spec:
         app: php-depl
     spec:
       containers:
-      - name: php
-        image: php-img
-        ports:
-        - containerPort: 5000
-        imagePullPolicy: Never
+        - name: phpmyadmin
+          image: php-img
+          ports:
+          - containerPort: 5000
+          imagePullPolicy: Never
 ---
 apiVersion: v1
 kind: Service
@@ -31,7 +31,7 @@ spec:
   selector:
     app: php-depl
   ports:
-    - name: https
+    - name: phpmyadmin
       protocol: TCP
       port: 5000
       targetPort: 5000

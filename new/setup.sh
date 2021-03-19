@@ -19,7 +19,7 @@ eval $(minikube docker-env)
 
 # delete old alpine image
 
-#docker rmi -f alpine:3.13
+docker rmi -f alpine:3.13
 
 # Building images
 
