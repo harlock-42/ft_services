@@ -19,6 +19,7 @@ RUN openrc >/dev/null 2>&1
 #RUN export TELEGRAF_CONFIG_PATH="/etc/telegraf/telegraf.conf"
 
 COPY init.sh /tmp/init.sh
+COPY conf.sql /tmp/conf.sql
 
 # Give permission to init.sh file to be executable
 RUN chmod 711 /tmp/init.sh

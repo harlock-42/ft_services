@@ -26,15 +26,9 @@ sed -i "s|.*skip-networking.*|skip-networking|g" /etc/mysql/my.cnf
 
 sed -i "s|.*skip-networking.*|skip-networking|g" /etc/my.cnf.d/mariadb-server.cnf
 
+rc-service mariadb restart
 # setup database
-
-echo "CREATE USER 'harlock'@'localhost' IDENTIFIED BY 'user42' ;" | mysql -u root
-
-echo "CREATE DATABASE data ; " | mysql -u root
-
-echo "GRANT ALL PRIVILEGES ON *.* TO 'harlock'@'localhost' WITH GRANT OPTION ;" | mysql -u root
-
-echo "FLUSH PRIVILEGES ;" | mysql -u root
+mysql < /tmp/conf.sql
 
 #telegraf
 

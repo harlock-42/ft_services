@@ -26,6 +26,7 @@ sed -i "s|.*skip-networking.*|skip-networking|g" /etc/mysql/my.cnf
 
 sed -i "s|.*skip-networking.*|skip-networking|g" /etc/my.cnf.d/mariadb-server.cnf
 
+rc-service mariadb restart
 # setup database
 
 echo "CREATE USER 'harlock'@'localhost' IDENTIFIED BY 'user42' ;" | mysql -u root
