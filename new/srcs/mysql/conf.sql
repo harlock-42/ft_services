@@ -1,6 +1,6 @@
-CREATE DATABASE mysql;
-CREATE USER 'harlock'@'%' IDENTIFIED BY 'harlock';
+CREATE DATABASE wordpress;
+CREATE USER 'harlock'@'%' IDENTIFIED BY 'user42';
 GRANT ALL PRIVILEGES ON wordpress.* TO 'harlock'@'%';
-CREATE USER 'harlock-metrics'@'%' IDENTIFIED BY 'harlock';
-GRANT ALL PRIVILEGES ON wordpress.* TO 'harlock-metrics'@'%';
+CREATE USER 'harlock-metrics'@'%' IDENTIFIED BY 'user42';
+GRANT ALL PRIVILEGES ON wordpress.* TO 'harlock'@'%';
 FLUSH PRIVILEGES;

@@ -39,12 +39,17 @@ kubectl apply -f ./srcs/metallb.yaml
 #kubectl apply -f ./srcs/influxdb/influxdb-volume.yaml
 #kubectl apply -f ./srcs/mysql/mysql-volume.yaml
 
+# start databases
+
+kubectl apply -f ./srcs/mysql/mysql.yaml
+
+
+sleep 5
 # start deployments
 
 kubectl apply -f ./srcs/nginx/nginx-depl.yaml
 #kubectl apply -f ./srcs/influxdb/influxdb-depl.yaml
 #kubectl apply -f ./srcs/grafana/grafana-depl.yaml
-kubectl apply -f ./srcs/mysql/mysql-depl.yaml
 kubectl apply -f ./srcs/phpmyadmin/php-depl.yaml
 #kubectl apply -f ./srcs/wordpress/wp-depl.yaml
 
