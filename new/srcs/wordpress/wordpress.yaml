@@ -1,38 +1,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: php-deployment
+  name: wp-deployment
   labels:
-    app: php-depl
+    app: wp-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: php-depl
+      app: wp-depl
   template:
     metadata:
       labels:
-        app: php-depl
+        app: wp-depl
     spec:
       containers:
         - name: phpmyadmin
-          image: php-img
+          image: wp-img
           ports:
-          - containerPort: 5000
+          - containerPort: 5050
           imagePullPolicy: Never
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: phpmyadmin
+  name: wp-service
   annotations:
     metallb.universe.tf/allow-shared-ip : shared
 spec:
   selector:
-    app: php-depl
+    app: wp-depl
   ports:
-    - name: phpmyadmin
+    - name:
       protocol: TCP
-      port: 5000
-      targetPort: 5000
+      port: 5050
+      targetPort: 5050
   type: LoadBalancer

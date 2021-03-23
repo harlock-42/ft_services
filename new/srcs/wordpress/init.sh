@@ -1,4 +1,4 @@
-service php-fpm7 start
+rc-service php-fpm7 start
 
 telegraf
 

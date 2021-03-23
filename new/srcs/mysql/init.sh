@@ -1,7 +1,7 @@
 
 /etc/init.d/mariadb setup
 
-/etc/init.d/mariadb start >> /dev/null
+/etc/init.d/mariadb start 2 /dev/null
 
 # 
 mysql_secure_installation <<EOF
@@ -16,21 +16,15 @@ EOF
 
 # Modifying /etc/mysql/my.cnf
 
-sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/mysql/my.cnf
-
 sed -i "s|.*bind-address\s*=.*|bind-address=0.0.0.0|g" /etc/my.cnf.d/mariadb-server.cnf
-
-sed -i "s|.*skip-networking.*|skip-networking|g" /etc/mysql/my.cnf
-
-# Modifying /etc/my.cnf.d/mariadb-server.cnf
-
-sed -i "s|.*skip-networking.*|skip-networking|g" /etc/my.cnf.d/mariadb-server.cnf
-
+sed -i "s|.*skip-networking.*|#skip-networking|g" /etc/my.cnf.d/mariadb-server.cnf
 rc-service mariadb restart
+
 # setup database
 mysql < /tmp/conf.sql
+mysql wordpress < /tmp/wordpress.sql
 
-#telegraf
+telegraf
 
 # generate an infinity loop to keep the container running
 sleep infinity

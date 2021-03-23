@@ -60,6 +60,9 @@ kubectl delete -f RESOURCE_NAME OBJECT_NAME
 ```
 kubectl logs POD_NAME
 ```
+```
+kubectl get event
+```
 ## get an interactive shell to navigate inside the pod
 ```
 kubectl exec -it POD_NAME -- bash

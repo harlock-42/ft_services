@@ -1,20 +1,38 @@
-FROM alpine:3.13.2
+FROM alpine:3.13
 
+# instaling packages
 RUN apk update
-RUN apk add mysql mysql-client
+
+RUN apk add mariadb mariadb-client
+
+# onpenrc installation and fixing
 RUN apk add openrc
-RUN mkdir -p /run/openrc
-RUN touch /run/openrc/softlevel && openrc >/dev/null 2>&1
+RUN mkdir -p /run/openrc && \
+touch /run/openrc/softlevel
+RUN openrc >/dev/null 2>&1
 
+# Telegraf configuration
 #RUN apk add telegraf
-#RUN mkdir -p etc/telegraf/ && mkdir -p /var/log/telegraf-log
-#RUN touch /var/log/telegraf-log/telegraf.log
-#COPY ./srcs/telegraf.conf /etc/telegraf/
+#RUN mkdir -p /var/log/telegraf
+#RUN touch /var/log/telegraf/telegraf.log
+#COPY telegraf.conf /etc/telegraf/telegraf.conf
+#RUN export TELEGRAF_CONFIG_PATH="/etc/telegraf/telegraf.conf"
 
-COPY ./conf.sql /tmp/
-#COPY /wordpress.sql /tmp/
-COPY ./init.sh /tmp/init.sh
-RUN chmod 755 ./tmp/init.sh
+COPY init.sh /tmp/init.sh
+COPY conf.sql /tmp/conf.sql
+COPY wordpress.sql /tmp/wordpress.sql
 
-EXPOSE 	3306
-ENTRYPOINT sh ./tmp/init.sh
+# Telegraf configuration
+RUN apk add telegraf
+RUN mkdir -p /var/log/telegraf
+RUN touch /var/log/telegraf/telegraf.log
+COPY telegraf.conf /etc/telegraf/telegraf.conf
+RUN export TELEGRAF_CONFIG_PATH="/etc/telegraf/telegraf.conf"
+
+# Give permission to init.sh file to be executable
+RUN chmod 711 /tmp/init.sh
+
+# start mariadb to create /etc/init.d/mariadb and other executable in this path
+ENTRYPOINT ./tmp/init.sh
+
+EXPOSE 3306

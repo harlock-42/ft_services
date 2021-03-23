@@ -2,19 +2,19 @@ FROM alpine:3.13
 
 RUN apk update
 
-RUN apk add vim
+# nginx config
 
-# Installing openrc
+RUN apk add vim && \
+apk add wget
+
+# install php packages
+RUN apk add php7 php7-fpm php7-mysqli php7-mbstring php7-json php7-session php-sockets php7-common php7-opcache php7-zlib php7-curl php7-gd php7-cgi
+
+# openrc intallation
 RUN apk add openrc
 RUN mkdir -p /run/openrc && \
 touch /run/openrc/softlevel
 RUN openrc >/dev/null 2>&1
-
-# Installing and setup nginx
-RUN apk add nginx
-RUN mkdir -p /run/nginx
-COPY default.conf /etc/nginx/http.d/default.conf
-COPY index.html /var/www/index.html
 
 # SSL installation
 RUN apk add openssl
@@ -30,16 +30,13 @@ RUN openssl req -x509 \
 -out	/etc/ssl/certs/nginx-selfsigned.crt \
 -subj "/C=FR/ST=Paris/L=Paris/O=42 School/OU=harlock/CN=localhost"
 
-# Telegraf configuration
-RUN apk add telegraf
-RUN mkdir -p /var/log/telegraf
-RUN touch /var/log/telegraf/telegraf.log
-COPY telegraf.conf /etc/telegraf/telegraf.conf
-RUN export TELEGRAF_CONFIG_PATH="/etc/telegraf/telegraf.conf"
+# Installing and setup nginx
+RUN apk add nginx
+RUN mkdir -p /run/nginx
+COPY default.conf /etc/nginx/http.d/default.conf
 
-COPY init.sh /tmp/init.sh
+# Installing and setup wordpress
+WORKDIR /var/www/
+RUN wget -q http://wordpress.org/latest.tar.gz
 
-ENTRYPOINT /tmp/init.sh
-
-EXPOSE 80
-EXPOSE 443
+ENTRYPOINT nginx -g "daemon off;"
