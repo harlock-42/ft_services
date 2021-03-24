@@ -1,5 +1,5 @@
 
-/etc/init.d/mariadb setup
+telegraf & /etc/init.d/mariadb setup
 
 /etc/init.d/mariadb start 2 /dev/null
 
@@ -23,8 +23,6 @@ rc-service mariadb restart
 # setup database
 mysql < /tmp/conf.sql
 mysql wordpress < /tmp/wordpress.sql
-
-telegraf
 
 # generate an infinity loop to keep the container running
 sleep infinity

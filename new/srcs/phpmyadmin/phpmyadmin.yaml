@@ -1,49 +1,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: phpmyadmin
+  name: php-deployment
   labels:
-    app: phpmyadmin
+    app: php-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: phpmyadmin
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
+      app: php-depl
   template:
     metadata:
       labels:
-        app: phpmyadmin
+        app: php-depl
     spec:
       containers:
-      - image: php-img
-        imagePullPolicy: Never
-        name: phpmyadmin
-        livenessProbe:
-          exec:
-            command:
-            - /bin/sh
-            - -c
-            - ps -o comm | grep 'telegraf' && ps -o comm | grep 'nginx' && ps -o comm | grep 'php-fpm7'
-          initialDelaySeconds: 30
-          periodSeconds: 10
+        - name: phpmyadmin
+          image: php-img
+          ports:
+          - containerPort: 5000
+          imagePullPolicy: Never
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: phpmyadmin
   annotations:
-    metallb.universe.tf/allow-shared-ip: shared
+    metallb.universe.tf/allow-shared-ip : shared
 spec:
-  type: LoadBalancer
   selector:
-    app: phpmyadmin
+    app: php-depl
   ports:
-  - name: pma-port
-    protocol: TCP
-    port: 5000
-    targetPort: 5000
+    - name: phpmyadmin
+      protocol: TCP
+      port: 5000
+      targetPort: 5000
+  type: LoadBalancer
