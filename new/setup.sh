@@ -23,11 +23,11 @@ install_metallb()
 
 #start_minikube
 
-install_metallb
+#install_metallb
 
 eval $(minikube docker-env)
 
-build_image
+#build_image
 
 # apply metallb
 

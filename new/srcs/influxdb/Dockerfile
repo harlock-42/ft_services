@@ -10,10 +10,6 @@ RUN mkdir -p /run/openrc && \
 touch /run/openrc/softlevel
 RUN openrc >/dev/null 2>&1
 
-# Telegraf configuration
-
-COPY init.sh /tmp/init.sh
-COPY influxdb.conf /etc/influxdb.conf
 
 # Telegraf configuration
 RUN apk add telegraf
@@ -22,6 +18,7 @@ RUN touch /var/log/telegraf/telegraf.log
 COPY telegraf.conf /etc/telegraf/telegraf.conf
 RUN export TELEGRAF_CONFIG_PATH="/etc/telegraf/telegraf.conf"
 
+COPY init.sh /tmp/init.sh
 RUN chmod 755 /tmp/init.sh
 ENTRYPOINT /tmp/init.sh
 
