@@ -39,5 +39,9 @@ RUN export TELEGRAF_CONFIG_PATH="/etc/telegraf/telegraf.conf"
 
 COPY init.sh /tmp/init.sh
 
+RUN chmod 755 /tmp/init.sh
 
 ENTRYPOINT /tmp/init.sh
+
+EXPOSE 80
+EXPOSE 443
