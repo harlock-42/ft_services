@@ -4,6 +4,4 @@ echo "CREATE DATABASE metrics" | influx
 
 echo "CREATE USER harlock WITH PASSWORD user42 WITH ALL PRIVILEGES" | influx
 
-telegraf
-
-sleep infinity
+telegraf & sleep infinity

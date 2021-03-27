@@ -2,8 +2,6 @@ FROM alpine:3.13
 
 RUN apk update
 
-RUN apk add influxdb
-
 # openrc intallation
 RUN apk add openrc
 RUN mkdir -p /run/openrc && \
@@ -22,14 +20,16 @@ RUN openssl req -x509 \
 
 # Telegraf configuration
 RUN apk add telegraf
-RUN mkdir -p /etc/telegraf/
 RUN mkdir -p /var/log/telegraf
 RUN touch /var/log/telegraf/telegraf.log
 COPY telegraf.conf /etc/telegraf/telegraf.conf
 RUN export TELEGRAF_CONFIG_PATH="/etc/telegraf/telegraf.conf"
 
+# vsftpd installation and config
+RUN apk add vsftpd
+COPY vsftpd.conf /etc/vsftpd/vsftpd.conf
+
 COPY init.sh /tmp/init.sh
 RUN chmod 755 /tmp/init.sh
-ENTRYPOINT /tmp/init.sh
 
-EXPOSE 8086
+ENTRYPOINT /tmp/init.sh

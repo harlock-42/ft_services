@@ -1,38 +1,42 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: grafana-deployment
+  name: ftps-deployment
   labels:
-    app: grafana-depl
+    app: ftps-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: grafana-depl
+      app: ftps-depl
   template:
     metadata:
       labels:
-        app: grafana-depl
+        app: ftps-depl
     spec:
       containers:
-      - name: grafana
-        image: grafana-img
+      - name: ftps
+        image: ftps-img
         ports:
-          - containerPort: 3000
+          - containerPort: 21
+          - containerPort: 30020
         imagePullPolicy: Never
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: grafana
+  name: ftps
   annotations:
     metallb.universe.tf/allow-shared-ip : shared
 spec:
   selector:
-    app: grafana-depl
+    app: ftps-depl
   ports:
-    - name: grafana
+    - name: ftps
       protocol: TCP
-      port: 3000
-      targetPort: 3000
+      port: 21
+      targetPort: 21
+    - name: pasv
+      port: 30020
+      targetPort: 30020
   type: LoadBalancer

@@ -4,6 +4,7 @@ build_image()
 	docker build -t mysql-img ./srcs/mysql/.
 	docker build -t php-img ./srcs/phpmyadmin/.
 	docker build -t nginx-img ./srcs/nginx/.
+	docker build -t ftps-img ./srcs/ftps/.
 	docker build -t influxdb-img ./srcs/influxdb/.
 	docker build -t grafana-img ./srcs/grafana/.
 }
@@ -24,6 +25,9 @@ install_metallb()
 start_minikube
 
 install_metallb
+
+# install FileZilla
+sudo apt-get install filezilla
 
 eval $(minikube docker-env)
 
@@ -50,5 +54,7 @@ sleep 5
 kubectl apply -f ./srcs/grafana/grafana.yaml
 kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml
 kubectl apply -f ./srcs/wordpress/wordpress.yaml
+kubectl apply -f ./srcs/ftps/ftps.yaml
 kubectl apply -f ./srcs/nginx/nginx-depl.yaml
+kubectl apply -f ./srcs/telegraf/telegraf.yaml
 
