@@ -22,19 +22,14 @@ RUN openssl req -x509 \
 RUN apk add telegraf
 RUN mkdir -p /var/log/telegraf
 RUN touch /var/log/telegraf/telegraf.log
-COPY ./srcs/telegraf.conf /etc/telegraf/telegraf.conf
+COPY telegraf.conf /etc/telegraf/telegraf.conf
 RUN export TELEGRAF_CONFIG_PATH="/etc/telegraf/telegraf.conf"
 
 # vsftpd installation and config
 RUN apk add vsftpd
-COPY ./srcs/vsftpd.conf /etc/vsftpd/vsftpd.conf
-RUN adduser --disabled-password --home etc/vsftpd/home harlock
-RUN echo "harlock:user42" | chpasswd
-RUN echo 'I m a test file waiting to be transfered in the ft_service directory' >> etc/vsftpd/home/testfile.txt
-RUN chown harlock /
-RUN chmod 766 /etc/vsftpd/home/testfile.txt
+COPY vsftpd.conf /etc/vsftpd/vsftpd.conf
 
-COPY ./srcs/start.sh /tmp/init.sh
+COPY init.sh /tmp/init.sh
 RUN chmod 755 /tmp/init.sh
 
 ENTRYPOINT /tmp/init.sh

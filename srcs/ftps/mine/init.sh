@@ -1,0 +1,2 @@
+vsftpd & telegraf
+sleep infinity

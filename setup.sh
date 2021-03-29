@@ -55,6 +55,6 @@ kubectl apply -f ./srcs/grafana/grafana.yaml
 kubectl apply -f ./srcs/phpmyadmin/phpmyadmin.yaml
 kubectl apply -f ./srcs/wordpress/wordpress.yaml
 kubectl apply -f ./srcs/ftps/ftps.yaml
-kubectl apply -f ./srcs/nginx/nginx-depl.yaml
+kubectl apply -f ./srcs/nginx/nginx.yaml
 kubectl apply -f ./srcs/telegraf/telegraf.yaml
 
