@@ -27,14 +27,14 @@ spec:
             command:
             - /bin/sh
             - -c
-            - ps -o comm | grep 'telegraf' && ps -o comm | grep 'influxdb'
+            - ps -o comm | grep 'telegraf' && ps -o comm | grep 'influxd'
           initialDelaySeconds: 30
           periodSeconds: 10
         volumeMounts:
-        - name: influxdb-volume
+        - name: influxdb-pv
           mountPath: /var/lib/influxdb
       volumes:
-      - name: influxdb-volume
+      - name: influxdb-pv
         persistentVolumeClaim:
           claimName: influxdb-volume
 ---

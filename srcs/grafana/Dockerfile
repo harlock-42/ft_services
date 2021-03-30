@@ -22,6 +22,7 @@ RUN touch /var/log/telegraf/telegraf.log
 COPY telegraf.conf /etc/telegraf/telegraf.conf
 RUN export TELEGRAF_CONFIG_PATH="/etc/telegraf/telegraf.conf"
 
+COPY grafana.db /usr/share/grafana/data/grafana.db
 RUN rm /usr/share/grafana/conf/sample.ini
 COPY grafana.ini /usr/share/grafana/conf/grafana.ini
 

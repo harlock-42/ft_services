@@ -4,16 +4,16 @@ kind: Deployment
 metadata:
   name: ftps
   labels:
-    app: ftps
+    app: ftps-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ftps
+      app: ftps-depl
   template:
     metadata:
       labels:
-        app: ftps
+        app: ftps-depl
     spec:
       containers:
       - name: ftps
@@ -41,7 +41,7 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app: ftps
+    app: ftps-depl
   ports:
     - name: http
       protocol: TCP
