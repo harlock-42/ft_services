@@ -7,13 +7,13 @@ apk add openssl && \
 apk add vim
 
 # Generate a SSL key
-RUN openssl req -x509 \
--nodes \
--days 365 \
--newkey rsa:2048 \
--out /etc/ssl/certs/cert.pem \
--keyout /etc/ssl/private/key.pem \
--subj "/C=FR/ST=Paris/L=Paris/O=42 School/OU=harlock/CN=localhost"
+#RUN openssl req -x509 \
+#-nodes \
+#-days 365 \
+#-newkey rsa:2048 \
+#-out /etc/ssl/certs/cert.pem \
+#-keyout /etc/ssl/private/key.pem \
+#-subj "/C=FR/ST=Paris/L=Paris/O=42 School/OU=harlock/CN=localhost"
 
 # Telegraf configuration
 RUN apk add telegraf
