@@ -195,7 +195,7 @@ echo "${GREEN}Done !${NC}"
 
 eval $(minikube docker-env)
 
-echo "${ORANGE}Well, now hard work begins !\nWe are going to build your image. In you interest, i hope you you like staying watching the screen during a while${NC}"
+echo "${ORANGE}Well, now hard work begins !\nWe are going to build your image. In you interest, i hope you like staying watching the screen during a while${NC}"
 build_image
 
 echo "${ORANGE}Your images are built, Good ! Last hard step, applying your .yaml files${NC}"
