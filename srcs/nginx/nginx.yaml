@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    app: nginx-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx-depl
+  template:
+    metadata:
+      labels:
+        app: nginx-depl
+    spec:
+      containers:
+        - name: nginx
+          image: nginx-img
+          ports:
+          - containerPort: 80
+          - containerPort: 443
+          imagePullPolicy: Never
+          livenessProbe:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - ps -o comm | grep 'telegraf' && ps -o comm | grep 'nginx'
+            initialDelaySeconds: 30
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  annotations:
+    metallb.universe.tf/allow-shared-ip : shared
+spec:
+  selector:
+    app: nginx-depl
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 80
+    - name: https
+      protocol: TCP
+      port: 443
+      targetPort: 443
+  type: LoadBalancer

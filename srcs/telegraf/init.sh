@@ -1,3 +1,0 @@
-telegraf
-
-sleep infinity

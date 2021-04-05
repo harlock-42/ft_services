@@ -1,0 +1,52 @@
+# DEPLOYMENT
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ftps
+  labels:
+    app: ftps-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ftps-depl
+  template:
+    metadata:
+      labels:
+        app: ftps-depl
+    spec:
+      containers:
+      - name: ftps
+        image: ftps-img
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 21
+        - containerPort: 30020
+        livenessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - ps -o comm | grep 'telegraf' && ps -o comm | grep 'vsftpd'
+          initialDelaySeconds: 30
+          periodSeconds: 10
+---
+# SERVICE
+apiVersion: v1
+kind: Service
+metadata:
+  name: ftps
+  annotations:
+    metallb.universe.tf/allow-shared-ip: shared
+spec:
+  type: LoadBalancer
+  selector:
+    app: ftps-depl
+  ports:
+    - name: http
+      protocol: TCP
+      port: 21
+      targetPort: 21
+    - name: pasv
+      port: 30020
+      targetPort: 30020

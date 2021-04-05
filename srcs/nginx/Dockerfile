@@ -1,14 +1,20 @@
-FROM alpine:3.13.2
+FROM alpine:3.13
 
-RUN apk update \
-&& apk add openssl \
-&& apk add vim \
-&& apk add nginx
+RUN apk update
 
-# This repo is necessary to start nginx, however it doesn't exixt on alpine image
+RUN apk add vim
+
+# Installing openrc
+RUN apk add openrc
+RUN mkdir -p /run/openrc && \
+touch /run/openrc/softlevel
+RUN openrc >/dev/null 2>&1
+
+# Installing and setup nginx
+RUN apk add nginx
 RUN mkdir -p /run/nginx
-
-WORKDIR /etc/nginx
+COPY default.conf /etc/nginx/http.d/default.conf
+COPY index.html /var/www/index.html
 
 # SSL installation
 RUN apk add openssl
@@ -31,12 +37,11 @@ RUN touch /var/log/telegraf/telegraf.log
 COPY telegraf.conf /etc/telegraf/telegraf.conf
 RUN export TELEGRAF_CONFIG_PATH="/etc/telegraf/telegraf.conf"
 
-WORKDIR ../..
-
-COPY index.html /data/www/index.html
-
-COPY nginx.conf /etc/nginx/nginx.conf
-
 COPY init.sh /tmp/init.sh
 
+RUN chmod 755 /tmp/init.sh
+
 ENTRYPOINT /tmp/init.sh
+
+EXPOSE 80
+EXPOSE 443

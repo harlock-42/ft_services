@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana-deployment
+  labels:
+    app: grafana-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana-depl
+  template:
+    metadata:
+      labels:
+        app: grafana-depl
+    spec:
+      containers:
+      - name: grafana
+        image: grafana-img
+        ports:
+          - containerPort: 3000
+        imagePullPolicy: Never
+        livenessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            - ps -o comm | grep 'telegraf' && ps -o comm | grep 'grafana-server'
+          initialDelaySeconds: 30
+          periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+  annotations:
+    metallb.universe.tf/allow-shared-ip : shared
+spec:
+  selector:
+    app: grafana-depl
+  ports:
+    - name: grafana
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: LoadBalancer

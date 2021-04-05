@@ -1,5 +1,3 @@
-rc-service php-fpm7 start >/dev/null 2>&1
+telegraf & rc-service php-fpm7 start
 
-telegraf
-
-nginx -g "daemon off;"
+nginx -g 'daemon off;'

@@ -1,5 +1,2 @@
-rc-service vsftpd start
-
-telegraf
-
+rc-service vsftpd start & telegraf
 sleep infinity
